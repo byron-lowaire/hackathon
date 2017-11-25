@@ -1,0 +1,22 @@
+{
+  "request": {
+    "conversationToken": "",
+    "debugLevel": 1,
+    "inputType": "KEYBOARD",
+    "locale": "en-US",
+    "mockLocation": {
+      "city": "Mountain View",
+      "coordinates": {
+        "latitude": 37.421980615353675,
+        "longitude": -122.08419799804688
+      },
+      "formattedAddress": "Googleplex, Mountain View, CA 94043, United States",
+      "zipCode": "94043"
+    },
+    "query": "talk to monzo web",
+    "surface": "PHONE"
+  },
+  "response": {},
+  "debug": {},
+  "errors": []
+}
