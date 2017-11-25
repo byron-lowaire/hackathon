@@ -62,10 +62,50 @@ exports.hackacthon = functions.https.onRequest((request, response) => {
         }
     }
 
-    function remove_medication(app) {
+   function add_hobbies(app) {
+        const hobbies = app.getArgument('hobbies');
+        if(hobbies !== null) {
+            if (!app.data.hobbies) {
+                app.data.hobbies = [];
+            }
+
+            let exists = false;
+            for (const hobbies in app.data.hobbies) {
+                if (hobbies === app.data.hobbies[hobbies]) {
+                    exists = true;
+                }
+            }
+            if (!exists) {
+                app.data.hobbies.push(hobbies);
+                app.ask(`${hobbies} has been added to your list of hobbies, Do you want to do something else`);
+            } else {
+                app.ask(`${hobbies} is already on your list of hobbies, Do you want to do something else`);
+            }
+        } else {
+            app.ask(`I can't add that as it is not a hobbies, Do you want to do something else`);
+        }
 
     }
 
+    function remove_hobbies(app) {
+        const hobbies = app.getArgument('hobbies');
+        if(hobbies !== null) {
+            let exists = false;
+            for (const hobbies in app.data.hobbies) {
+                if (hobbies === app.data.hobbies[hobbies]) {
+                    exists = true;
+                    app.data.hobbies.splice(app.data.hobbies, 0)
+                }
+            }
+            if (exists) {
+                app.ask(`${hobbies} has been removed from your list of hobbies, Do you want to do something else`);
+            } else {
+                app.ask(`${hobbies} is not on your list of hobbies, Do you want to do something else`);
+            }
+        } else {
+            app.ask(`I can't remove that as it is not a hobbies, Do you want to do something else`);
+        }
+    }
     function endSession(app) {
         if(app.getRawInput() === 'no' && app.data.prompt === 'question') {
             app.data.prompt = 'default';
