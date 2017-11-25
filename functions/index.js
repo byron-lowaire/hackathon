@@ -19,9 +19,51 @@ exports.hackacthon = functions.https.onRequest((request, response) => {
 
     function add_medication(app) {
         const medication = app.getArgument('medication');
-        if (app.data.medication) {
-            app.data.medication.push(medication)
+        if(medication !== null) {
+            if (!app.data.medication) {
+                app.data.medication = [];
+            }
+
+            let exists = false;
+            for (const medications in app.data.medications) {
+                if (medication === app.data.medications[medications]) {
+                    exists = true;
+                }
+            }
+            if (!exists) {
+                app.data.medication.push(medication);
+                app.ask(`${medication} has been added to your list of medications, Do you want to do something else`);
+            } else {
+                app.ask(`${medication} is already on your list of medications, Do you want to do something else`);
+            }
+        } else {
+            app.ask(`I can't add that as it is not a medication, Do you want to do something else`);
         }
+
+    }
+
+    function remove_medication(app) {
+        const medication = app.getArgument('medication');
+        if(medication !== null) {
+            let exists = false;
+            for (const medications in app.data.medications) {
+                if (medication === app.data.medications[medications]) {
+                    exists = true;
+                    app.data.medications.splice(app.data.medications, 0)
+                }
+            }
+            if (exists) {
+                app.ask(`${medication} has been removed from your list of medications, Do you want to do something else`);
+            } else {
+                app.ask(`${medication} is not on your list of medications, Do you want to do something else`);
+            }
+        } else {
+            app.ask(`I can't remove that as it is not a medication, Do you want to do something else`);
+        }
+    }
+
+    function remove_medication(app) {
+
     }
 
     function endSession(app) {
